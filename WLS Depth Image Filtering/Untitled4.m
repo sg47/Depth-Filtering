@@ -1,0 +1,43 @@
+
+close all;
+
+      figure(1);
+      mesh(double(x),double(y),double(z),double(rgb)/255, 'LineStyle', 'none', 'Marker', '.', 'MarkerSize', 5); 
+      axis equal; 
+      xlabel('x'); ylabel('y'); zlabel('z'); 
+      set(gca,'ZDir','reverse'); 
+      set(gca,'XDir','reverse'); 
+      view([100 180 40]);
+      
+      
+      [tmpX,tmpY,tmpZ] = sph2cart(theta,phi,ext_rho);
+      nx = tmpX;
+      nz = tmpY;
+      ny = -tmpZ;
+
+      figure(2);
+      mesh(double(nx),double(nz),double(ny),double(rgb)/255, 'LineStyle', 'none', 'Marker', '.', 'MarkerSize', 5); 
+      axis equal; 
+      xlabel('x'); ylabel('z'); zlabel('y'); 
+      set(gca,'YDir','reverse'); 
+      set(gca,'XDir','reverse'); 
+      view([100 180 40]);
+      
+      
+      xx = X;
+      zz = Y;
+      yy = -Z;
+      
+      xx = xx( 5:end-4 , 5:end-4);
+      yy = yy( 5:end-4 , 5:end-4);
+      zz = zz( 5:end-4 , 5:end-4);
+      rgb2 = rgb( 5:end-4 , 5:end-4, :);
+            
+      figure(3);
+      mesh(double(xx),double(zz),double(yy),double(rgb2)/255, 'LineStyle', 'none', 'Marker', '.', 'MarkerSize', 5); 
+      axis equal; 
+      xlabel('x'); ylabel('z'); zlabel('y'); 
+      set(gca,'YDir','reverse'); 
+      set(gca,'XDir','reverse'); 
+      view([100 180 40]);
+  

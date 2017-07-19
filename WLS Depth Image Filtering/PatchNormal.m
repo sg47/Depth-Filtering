@@ -1,0 +1,19 @@
+function [normal varargout] = PatchNormal(x, y, z)
+    [N_scan N_point] = size(x);
+    row_zero = zeros(1, N_point);
+    col_zero = zeros(N_scan, 1);
+    vertical(:,:,1) = x - [x(2:end,:); row_zero];
+    vertical(:,:,2) = y - [y(2:end,:); row_zero];
+    vertical(:,:,3) = z - [z(2:end,:); row_zero];
+    horizontal(:,:,1) = x - [x(:, 2:end), col_zero];
+    horizontal(:,:,2) = y - [y(:, 2:end), col_zero];
+    horizontal(:,:,3) = z - [z(:, 2:end), col_zero];
+    normal = cross(horizontal, vertical, 3);
+    normal(N_scan, N_point, :) = 1; 
+    normal = normal./repmat(sqrt(sum(normal.^2, 3)), [1 1 3]);                 % Length normalization
+    cen = zeros(size(normal));
+    cen(:,:,1) = (3*x - horizontal(:,:,1) - vertical(:,:,1))/3;
+    cen(:,:,2) = (3*y - horizontal(:,:,2) - vertical(:,:,2))/3;
+    cen(:,:,3) = (3*z - horizontal(:,:,3) - vertical(:,:,3))/3;
+     normal = repmat(-sign(dot(normal,cen,3)),[1 1 3]).*normal;
+end
